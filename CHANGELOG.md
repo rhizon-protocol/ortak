@@ -22,3 +22,9 @@ Bu dosya önemli kullanıcıya dönük değişiklikleri ve bilinen sınırlamala
 ### Yayın notu
 
 İlk gönderimdeki GitHub Actions tür denetimi hatası düzeltildi. Bu düzeltmenin uzak depoya gönderilip `Validate and deploy Ortak` iş akışının başarılı tamamlandığı ayrıca doğrulanmalıdır. İki fiziksel cihaz arasında WebRTC ve otomatik katılımcı havuzu henüz doğrulanmış/uygulanmış değildir; dağıtık modun tüm ağlarda çalıştığı iddia edilmez.
+
+
+## Unreleased
+
+- Define a zero-mandatory-cost policy for hosting, peer discovery, and WebRTC fallback behavior.
+- Make the TypeScript fallback more compatible with Windows npm environments by invoking the npm JavaScript CLI when available.

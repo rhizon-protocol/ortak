@@ -52,3 +52,7 @@ Hataları [GitHub Issues](https://github.com/rhizon-protocol/ortak/issues) üzer
 ## Lisans
 
 Apache License 2.0 — bkz. [`LICENSE`](LICENSE).
+
+## Cost policy
+
+See [docs/zero-cost-policy.md](docs/zero-cost-policy.md) for the no-mandatory-payment and quota-exhaustion rules.
