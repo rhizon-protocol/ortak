@@ -1,0 +1,42 @@
+name: Hata bildirimi
+description: Ortak'ta tekrarlanabilir bir sorun bildir.
+title: "[Hata]: "
+labels: [bug, triage]
+body:
+  - type: markdown
+    attributes:
+      value: "Lütfen kişisel fotoğraf veya hassas dosya ekleme."
+  - type: textarea
+    id: steps
+    attributes:
+      label: Yeniden oluşturma adımları
+      description: Sorunu adım adım anlat.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Beklenen ve gerçekleşen sonuç
+    validations:
+      required: true
+  - type: input
+    id: browser
+    attributes:
+      label: Tarayıcı ve sürümü
+    validations:
+      required: true
+  - type: input
+    id: device
+    attributes:
+      label: Cihaz ve işletim sistemi
+  - type: dropdown
+    id: mode
+    attributes:
+      label: İşlem modu
+      options:
+        - Yerel tek işçi
+        - Yerel çoklu işçi
+        - WebRTC eşler arası
+        - Uygulama açılışı / PWA
+    validations:
+      required: true

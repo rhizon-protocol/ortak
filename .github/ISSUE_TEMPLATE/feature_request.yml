@@ -1,0 +1,26 @@
+name: Özellik önerisi
+description: Kullanıcı ihtiyacını ve beklenen değeri paylaş.
+title: "[Öneri]: "
+labels: [enhancement, triage]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Hangi ihtiyacı çözüyor?
+      description: Mevcut sorunu ve kimleri etkilediğini anlat.
+    validations:
+      required: true
+  - type: textarea
+    id: solution
+    attributes:
+      label: Önerilen çözüm
+    validations:
+      required: true
+  - type: checkboxes
+    id: constraints
+    attributes:
+      label: Ürün ilkeleri
+      options:
+        - label: Varsayılan olarak yerel işleme ve gizliliği korur.
+        - label: Ücretli hizmeti zorunlu kılmaz.
+        - label: Gerçekleştirilmemiş dağıtık işi başarılı gibi göstermez.

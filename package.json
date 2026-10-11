@@ -1,0 +1,16 @@
+{
+  "name": "ortak",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Privacy-first local digital tools and experimental peer-to-peer computing.",
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "typecheck": "node scripts/typecheck.mjs",
+    "test": "node --test tests/*.test.mjs",
+    "serve": "node scripts/serve.mjs"
+  },
+  "engines": {
+    "node": ">=20.11"
+  }
+}

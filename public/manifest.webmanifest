@@ -1,0 +1,12 @@
+{
+  "name": "Ortak — Dijital Araç Kutusu",
+  "short_name": "Ortak",
+  "description": "Cihazında çalışan fotoğraf araçları ve deneysel eşler arası işlem.",
+  "lang": "tr-TR",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f7f8f5",
+  "theme_color": "#f7f8f5",
+  "icons": [{ "src": "./icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }]
+}

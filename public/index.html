@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f8f5">
+  <meta name="description" content="Fotoğraflarını cihazında küçült, yeniden boyutlandır ve dönüştür. Deneysel eşler arası işlemle iki cihazı karşılaştır.">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" href="./icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./styles.css">
+  <title>Ortak — Dijital Araç Kutusu</title>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#top" aria-label="Ortak ana sayfa">
+        <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 36 36"><path d="M18 4.5 31 12v12L18 31.5 5 24V12L18 4.5Z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 18h12M18 12v12" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg></span>
+        <span class="brand-copy"><strong>ortak</strong><small>dijital araç kutusu</small></span>
+      </a>
+      <nav aria-label="Ana menü" class="top-nav"><a class="nav-active" href="#photo-tool">Araçlar</a><a href="#how-it-works">Nasıl çalışır?</a><a href="#experiment">Deney alanı</a></nav>
+      <div class="local-badge"><span class="status-dot"></span> Cihazında çalışır</div>
+    </header>
+
+    <main id="top">
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <div class="eyebrow"><span class="eyebrow-line"></span> Küçük işler, birlikte daha kolay</div>
+          <h1 id="hero-title">Bugün ne yapmak <em>istiyorsun?</em></h1>
+          <p>Günlük dijital işlerini tek bir yerden hallet. Hesap açmadan, karmaşık ayarlar olmadan.</p>
+          <div class="hero-footnote"><span class="shield-icon" aria-hidden="true">✓</span> Fotoğrafların yerel işlemde cihazından ayrılmaz.</div>
+        </div>
+        <div class="hero-art" aria-hidden="true">
+          <div class="art-sun"></div><div class="art-card art-card-back"><div class="art-mini-lines"></div><div class="art-mini-lines short"></div></div>
+          <div class="art-card art-card-front"><div class="art-photo"><span class="art-mountain one"></span><span class="art-mountain two"></span><span class="art-sun-small"></span></div><div class="art-file-row"><span class="art-file-icon">JPG</span><span class="art-file-lines"><b></b><i></i></span><span class="art-check">✓</span></div></div>
+          <div class="art-spark spark-one">✳</div><div class="art-spark spark-two">✦</div><div class="art-sticker">dosyaların<br>seninle kalır<span>↗</span></div>
+        </div>
+      </section>
+
+      <section id="photo-tool" class="tool-layout" aria-labelledby="tool-title">
+        <aside class="tool-aside">
+          <span class="section-kicker">01 / FOTOĞRAF ARAÇLARI</span>
+          <h2 id="tool-title">Fotoğraflarımı küçült ve düzenle</h2>
+          <p>Birden fazla fotoğrafı aynı anda işle. Boyutunu ayarla, biçimini seç, sonuçları indir.</p>
+          <div class="aside-note"><span class="note-icon">⌘</span><div><strong>Basit ve güvenli</strong><p>Dosyalar yerel modda bir sunucuya yüklenmez.</p></div></div>
+          <div class="aside-note"><span class="note-icon">⏱</span><div><strong>Sonuçları ölç</strong><p>Boyut farkını ve gerçek işlem süresini gör.</p></div></div>
+          <div class="mini-link-wrap"><a href="#how-it-works" class="text-link">Gizlilik ve çalışma şekli <span>↗</span></a></div>
+        </aside>
+
+        <div class="workspace card-surface">
+          <div class="workspace-head"><div><div class="step-label"><span>1</span> FOTOĞRAFLARI EKLE</div><h3>Hangi fotoğraflar?</h3></div><span id="file-count" class="count-pill">0 dosya</span></div>
+          <div id="drop-zone" class="drop-zone" tabindex="0" role="button" aria-label="Fotoğraf seç veya sürükleyip bırak">
+            <input id="file-input" class="visually-hidden" type="file" accept="image/jpeg,image/png,image/webp,.jpg,.jpeg,.png,.webp" multiple>
+            <div class="upload-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><rect x="7" y="10" width="34" height="28" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17" cy="19" r="3" fill="currentColor"/><path d="m10 33 10-9 6 5 5-4 7 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>+</span></div>
+            <strong>Fotoğraflarını buraya bırak</strong><span>veya <button id="choose-files" class="inline-button" type="button">dosyalarını seç</button></span>
+            <small>JPEG, PNG veya WebP · En fazla 20 MB / dosya · 100 MB / oturum · 30 dosyaya kadar</small>
+          </div>
+          <div id="file-list" class="file-list" aria-live="polite"></div>
+
+          <div class="step-label settings-label"><span>2</span> ÇIKTIYI AYARLA</div>
+          <div class="settings-grid">
+            <label class="field"><span>Çıktı biçimi</span><select id="format-select"><option value="image/webp">WebP — küçük dosya</option><option value="image/jpeg">JPEG — yaygın uyumluluk</option><option value="image/png">PNG — kayıpsız</option></select></label>
+            <label class="field"><span>Maksimum genişlik (px)</span><input id="max-width" type="number" min="1" max="12000" value="1920" inputmode="numeric"></label>
+            <label class="field"><span>Maksimum yükseklik (px)</span><input id="max-height" type="number" min="1" max="12000" value="1920" inputmode="numeric"></label>
+            <label class="field quality-field"><span>Kalite <b id="quality-value">82%</b></span><input id="quality-range" type="range" min="40" max="100" value="82"><span class="range-hints"><small>Daha küçük dosya</small><small>Daha yüksek kalite</small></span></label>
+          </div>
+          <div id="transparency-warning" class="inline-warning" hidden>JPEG saydamlığı desteklemez. Saydam alanlar düz beyaz arka planla kaydedilir.</div>
+          <div class="action-row"><div class="worker-control"><label for="worker-count">Yerel işçi</label><select id="worker-count" aria-label="Yerel işçi sayısı"><option value="1">1 işçi</option><option value="2">2 işçi</option><option value="3">3 işçi</option><option value="4" selected>4 işçi</option></select></div><button id="process-button" class="primary-button" type="button" disabled>Fotoğrafları işle <span>→</span></button><button id="cancel-button" class="secondary-button" type="button" hidden>İptal et</button></div>
+          <p class="microcopy"><span aria-hidden="true">🔒</span> İşlem bu cihazda yapılır. Fotoğraflarını başka bir cihazla paylaşmak için deneysel modu ayrıca açmalısın.</p>
+          <div id="operation-status" class="status-message" role="status" aria-live="polite"></div>
+
+          <section id="results-section" class="results-section" hidden aria-labelledby="results-title">
+            <div class="results-header"><div><div class="step-label"><span>3</span> SONUÇLAR</div><h3 id="results-title">İşlenen fotoğrafların</h3></div><button id="download-all" class="secondary-button" type="button">Tümünü indir ↓</button></div>
+            <div id="summary-stats" class="summary-stats"></div><div id="result-list" class="result-list"></div>
+          </section>
+        </div>
+      </section>
+
+      <section id="experiment" class="experiment-section" aria-labelledby="experiment-title">
+        <div class="experiment-heading"><div><span class="section-kicker">02 / DENEY ALANI</span><h2 id="experiment-title">Aynı iş, farklı yollar.</h2><p>Yerel tek işçi, yerel çoklu işçi ve gerçekten bağlanan ikinci cihazı karşılaştır.</p></div><span class="experimental-pill">Deneysel</span></div>
+        <div class="experiment-grid">
+          <article class="experiment-card"><div class="experiment-number">A</div><div class="experiment-card-icon">↻</div><h3>Tek işçi</h3><p>Fotoğrafları aynı cihazda sırayla işle.</p><div class="experiment-meta"><span>Yerel</span><span>1 işçi</span></div><button id="benchmark-single" class="outline-button" type="button">Tek işçiyle dene <span>→</span></button></article>
+          <article class="experiment-card featured-experiment"><div class="experiment-number">B</div><div class="experiment-card-icon">⫶</div><h3>Çoklu işçi</h3><p>Bağımsız fotoğrafları aynı cihazın işçilerine paylaştır.</p><div class="experiment-meta"><span>Yerel</span><span id="benchmark-worker-label">4 işçi</span></div><button id="benchmark-multi" class="outline-button" type="button">Çoklu işçiyle dene <span>→</span></button></article>
+          <article class="experiment-card"><div class="experiment-number">C</div><div class="experiment-card-icon">⌁</div><h3>Başka cihaz</h3><p>Bir fotoğrafı başka tarayıcıya gönderip gerçek sonucu geri al.</p><div class="experiment-meta"><span>Eşler arası</span><span>WebRTC</span></div><button id="open-peer" class="outline-button" type="button">Cihaz bağla <span>→</span></button></article>
+        </div>
+        <div id="benchmark-results" class="benchmark-results" hidden><div class="results-header"><h3>Karşılaştırma sonuçların</h3><button id="clear-benchmark" class="text-button" type="button">Temizle</button></div><p class="benchmark-note">Sonuçlar bu cihazdaki gerçek ölçümlere dayanır. Farklı denemelerde iş yükü değişirse süreleri doğrudan kıyaslamak yanıltıcı olabilir.</p><div class="table-scroll"><table><thead><tr><th>Yöntem</th><th>Süre</th><th>Başarılı</th><th>Başarısız</th><th>Aktarım</th></tr></thead><tbody id="benchmark-table"></tbody></table></div></div>
+      </section>
+
+      <section id="peer-panel" class="peer-panel" hidden aria-labelledby="peer-title">
+        <div class="peer-heading"><div><span class="section-kicker">WEBRTC / UÇTAN UCA DENEY</span><h2 id="peer-title">Bir cihaz daha bağla</h2><p>Bağlantı için iki cihazda aynı uygulama açık olmalı. Bağlantı metnini güvenli bir kanaldan kopyalayıp diğer cihaza ilet.</p></div><button id="close-peer" class="icon-button" type="button" aria-label="Deney panelini kapat">✕</button></div>
+        <div class="peer-steps"><div class="peer-step"><span class="peer-step-num">1</span><div><h3>İlk cihaz</h3><p>Bağlantı daveti oluştur. Daveti ikinci cihaza kopyala.</p><button id="create-offer" class="secondary-button" type="button">Davet oluştur</button><label class="field peer-textarea-field"><span>Oluşturulan davet</span><textarea id="offer-output" rows="3" placeholder="Davet burada görünür…" spellcheck="false"></textarea></label><button class="text-button copy-button" data-copy="offer-output" type="button" disabled>Davet metnini kopyala</button></div></div>
+          <div class="peer-step"><span class="peer-step-num">2</span><div><h3>İkinci cihaz</h3><p>İlk cihazdan aldığın daveti yapıştır, yanıt üret ve geri gönder.</p><label class="field peer-textarea-field"><span>Gelen davet</span><textarea id="offer-input" rows="3" placeholder="İlk cihazdaki davet metnini buraya yapıştır…" spellcheck="false"></textarea></label><button id="create-answer" class="secondary-button" type="button">Yanıt oluştur</button><label class="field peer-textarea-field"><span>Oluşturulan yanıt</span><textarea id="answer-output" rows="3" placeholder="Yanıt burada görünür…" spellcheck="false"></textarea></label><button class="text-button copy-button" data-copy="answer-output" type="button" disabled>Yanıt metnini kopyala</button></div></div>
+          <div class="peer-step"><span class="peer-step-num">3</span><div><h3>İlk cihaz</h3><p>İkinci cihazın yanıtını yapıştırıp bağlantıyı tamamla.</p><label class="field peer-textarea-field"><span>İkinci cihazın yanıtı</span><textarea id="answer-input" rows="3" placeholder="Yanıt metnini buraya yapıştır…" spellcheck="false"></textarea></label><button id="connect-peer" class="primary-button" type="button">Bağlan <span>→</span></button><div id="peer-state" class="peer-state" role="status" aria-live="polite">Bağlantı kurulmadı.</div></div></div>
+        </div>
+        <div id="peer-security-note" class="peer-security-note"><span>!</span><p><strong>Dosya paylaşımı otomatik başlamaz.</strong> Karşı cihaz bir işin ayrıntılarını görür ve dosyayı almadan önce onay vermelidir. Yalnızca güvendiğin kişilerle dene.</p></div>
+        <div id="peer-job-controls" class="peer-job-controls" hidden><div class="peer-job-box"><div><strong>İş gönder</strong><p>Yalnızca listeden seçtiğin tek fotoğraf karşı cihaza aktarılır.</p></div><label class="field"><span>Gönderilecek fotoğraf</span><select id="peer-file-select"></select></label><button id="send-peer-job" class="primary-button" type="button" disabled>İşi karşı cihaza gönder <span>→</span></button></div><div id="incoming-job" class="incoming-job" hidden></div><div id="peer-progress" class="peer-progress" role="status" aria-live="polite"></div></div>
+        <p class="peer-footnote">Davet/yanıt metinleri ağ adresi adayları içerebilir; bunları yalnızca güvendiğin kişiyle paylaş. Ağın izin vermesi gerekir; herkese açık STUN servisi kullanılabilir, TURN veya arka uç yoktur. Bu nedenle bazı ağlarda bağlanmayabilir.</p>
+      </section>
+
+      <section id="how-it-works" class="how-section" aria-labelledby="how-title"><div class="how-title"><span class="section-kicker">03 / ŞEFFAFLIK</span><h2 id="how-title">Nasıl çalışıyor?</h2><p>Ne yaptığımızı ve hangi sınırların kaldığını açıkça gösteriyoruz.</p></div><div class="how-grid"><article><span class="how-icon">⌂</span><h3>Önce kendi cihazın</h3><p>Fotoğraflar tarayıcıda işlenir. Yerel modda dosya yüklemek için bir sunucu çağrısı yapılmaz.</p><span class="how-status good">Varsayılan açık</span></article><article><span class="how-icon">⤴</span><h3>Paylaşım senin kararın</h3><p>Eşler arası mod başlatılmadıkça fotoğraflar başka cihaza gönderilmez. Alıcı da işi ayrıca onaylar.</p><span class="how-status">Varsayılan kapalı</span></article><article><span class="how-icon">◷</span><h3>Ölçüm gerçek, garanti değil</h3><p>İşlem ve aktarım süreleri ölçülür. Dağıtık işleme her ağda daha hızlı olmak zorunda değildir.</p><span class="how-status">Deneysel</span></article></div><div class="privacy-footnote"><span>i</span><p><strong>Bilmen gereken:</strong> WebRTC veri kanalı eşler arasında doğrudan şifreli aktarım kurabilir; ancak bağlantı kurulumu için STUN gibi harici bir hizmete başvurulabilir. Karşı cihaz seçtiğin dosyanın içeriğini görebilir. Alınan sonuç görsel olarak doğrulanır ama kötü niyetli bir eşin işlemi dürüst yaptığı matematiksel olarak kanıtlanmaz.</p></div></section>
+    </main>
+    <footer class="footer"><a class="footer-brand" href="#top">ortak<span>.</span></a><p>Birlikte üret, kendi cihazında başla.</p><span>PoC · 0.1.0</span></footer>
+  </div>
+  <script type="module" src="./app.js"></script>
+</body>
+</html>
