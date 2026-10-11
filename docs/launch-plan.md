@@ -241,3 +241,8 @@ Bu boşluklar projenin değerini ortadan kaldırmaz; bir sonraki sürüm için d
 - WebRTC sinyalleşme modeli: https://developer.mozilla.org/en-US/docs/Web/API/WebRTC_API/Signaling_and_video_calling
 
 Organizasyon kararı `rhizon-protocol` olarak verilmiştir. Bu belge GitHub deposunun fiilen oluşturulduğunu, dosyaların push edildiğini veya Pages yayınının tamamlandığını iddia etmez; bunlar hâlâ yapılması gereken yetkili GitHub adımlarıdır. Apache-2.0 varsayılan lisansı da kamuya açılmadan önce proje sahibi tarafından onaylanmalıdır.
+
+
+## Otomatik katılımcı ağı için zorunlu ara aşama
+
+İlk sürümde kullanıcılar siteyi birlikte açınca otomatik olarak birbirini bulmaz; WebRTC bağlantısı elle kurulur. Bu, uzun vadeli ortak hesaplama hedefi değil, erken prototipin mevcut sınırlamasıdır. Presence/sinyalleşme, opt-in katılımcı havuzu, görev eşleştirme ve sonuç doğrulama aşamalarının ayrıntılı teknik planı [`collective-network-plan.md`](collective-network-plan.md) dosyasındadır. Bu altyapı devreye alınmadan uygulama otomatik dağıtık hesaplama ağı olarak duyurulmayacak.

@@ -12,7 +12,7 @@ function waitForIceGathering(pc, timeoutMs = 15000) {
       reject(new Error('ICE adayları 15 saniyede tamamlanmadı. STUN hizmeti veya ağ bağlantısı engelleniyor olabilir.'));
     }, timeoutMs);
     const onState = () => {
-      if (pc.iceGatheringState === 'complete') { cleanup(); resolve(); }
+      if (pc.iceGatheringState === 'complete') { cleanup(); resolve(undefined); }
     };
     const cleanup = () => { clearTimeout(timer); pc.removeEventListener('icegatheringstatechange', onState); };
     pc.addEventListener('icegatheringstatechange', onState);
@@ -174,7 +174,7 @@ export class PeerSession {
         await new Promise((resolve, reject) => {
           const timeout = setTimeout(() => { cleanup(); reject(new Error('Veri kanalı yavaşladı; aktarım durduruldu.')); }, 30_000);
           const cleanup = () => { clearTimeout(timeout); this.channel.removeEventListener('bufferedamountlow', onLow); this.channel.removeEventListener('close', onClose); };
-          const onLow = () => { cleanup(); resolve(); };
+          const onLow = () => { cleanup(); resolve(undefined); };
           const onClose = () => { cleanup(); reject(new Error('Aktarım sırasında bağlantı kapandı.')); };
           this.channel.addEventListener('bufferedamountlow', onLow, { once: true });
           this.channel.addEventListener('close', onClose, { once: true });

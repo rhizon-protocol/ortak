@@ -2,6 +2,14 @@
 
 Bu dosya önemli kullanıcıya dönük değişiklikleri ve bilinen sınırlamaları listeler.
 
+## Geliştirme — CI düzeltmesi ve ağ mimarisi açıklığı
+
+- TypeScript denetiminin bulduğu WebRTC kodundaki iki sıfır argümanlı `resolve()` çağrısı `resolve(undefined)` olarak düzeltildi.
+- GitHub Actions `checkout` ve `setup-node` eylemleri Node.js 24 ile çalışan güncel ana sürümlere geçirildi; runner `ubuntu-24.04` olarak sabitlendi.
+- Kullanıcı arayüzü, bu sürümde otomatik katılımcı keşfi ve otomatik görev dağıtımı olmadığını açıkça söylüyor.
+- Otomatik presence, WebRTC sinyalleşmesi, gönüllü katılım, görev eşleştirme ve ücretsiz altyapı kotaları için `docs/collective-network-plan.md` eklendi.
+- Service worker önbellek sürümü artırıldı; eski arayüz sürümünün güncellemeyi gizlemesi önleniyor.
+
 ## 0.1.0-alpha — ilk açık pilot hazırlığı
 
 - Türkçe öncelikli fotoğraf küçültme, yeniden boyutlandırma ve biçim dönüştürme arayüzü.
@@ -13,4 +21,4 @@ Bu dosya önemli kullanıcıya dönük değişiklikleri ve bilinen sınırlamala
 
 ### Yayın notu
 
-Bu sürüm henüz GitHub'da yayımlanmış değildir. Canlı URL ve iki fiziksel cihaz arasındaki WebRTC akışı doğrulanana kadar bu sürüm bir hazırlık paketidir; dağıtık modun tüm ağlarda çalıştığı iddia edilmez.
+İlk gönderimdeki GitHub Actions tür denetimi hatası düzeltildi. Bu düzeltmenin uzak depoya gönderilip `Validate and deploy Ortak` iş akışının başarılı tamamlandığı ayrıca doğrulanmalıdır. İki fiziksel cihaz arasında WebRTC ve otomatik katılımcı havuzu henüz doğrulanmış/uygulanmış değildir; dağıtık modun tüm ağlarda çalıştığı iddia edilmez.

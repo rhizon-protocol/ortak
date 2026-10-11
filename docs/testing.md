@@ -38,3 +38,17 @@ node scripts/e2e-p2p.mjs
 Bu test iki ayrı tarayıcı oturumunu aynı makinede kullanır; fiziksel iki cihaz testi değildir. Bu çalışma ortamındaki tarayıcı politikası yerel URL navigasyonunu engellediğinden burada tamamlanamadı.
 
 Fiziksel farklı cihazlar ve Safari/Firefox üzerinde test yapılmadığı sürece bu tarayıcı/ağ kabul kriterleri doğrulanmış sayılmaz. Eşler arası özelliğin iki farklı fiziksel cihaz ve farklı ağlar arasında çalıştığı, ayrıca TURN olmadığı durumda her NAT topolojisinin desteklendiği iddia edilmez. Bu sınırlamalar giderilmeden bu PoC bir kamuya açık hesaplama pazarı olarak sunulmamalıdır.
+
+
+## 11 Ekim 2026 — CI hata düzeltmesi sonrası tekrar kontrol
+
+Kullanıcının ilk GitHub Actions çalıştırmasında `public/peer.js` içindeki iki `new Promise` yürütücüsü `resolve()` değerini TypeScript 5.8.3 denetiminde zorunlu argümansız kullanıyordu. Her iki çağrı `resolve(undefined)` olarak düzeltildi. Aynı zamanda `actions/checkout@v7`, `actions/setup-node@v7`, Node.js 24 ve `ubuntu-24.04` ile uyarı veren Node 20 tabanlı eylem sürümleri ve `ubuntu-latest` geçiş belirsizliği giderildi.
+
+Bu paket üzerinde tekrar çalıştırılan doğrulamalar:
+
+- `npm test`: **8/8 geçti**.
+- `npm run typecheck`: **başarılı**.
+- `npm run build`: **başarılı**.
+- `node --check` (JS ve MJS kaynakları): **başarılı**.
+
+Bunlar yerel doğrulamalardır. Düzeltilmiş commit henüz uzak depoya gönderilmediğinden GitHub Actions'ın başarılı olduğu veya Pages'in yeni sürümü yayınladığı iddia edilmez. Ayrıca otomatik katılımcı keşfi ve görev dağıtımı yoktur; bunun için `collective-network-plan.md` belgesindeki ayrı koordinatör hizmetinin uygulanıp dağıtılması gerekir.

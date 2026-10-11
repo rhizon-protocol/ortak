@@ -1,18 +1,34 @@
-# GitHub yayınlama adımları — `rhizon-protocol/ortak`
+# GitHub Pages — mevcut deponun düzeltilmesi ve yayının doğrulanması
 
-**Durum:** Hazırlık talimatı; depo oluşturulmuş veya site yayımlanmış değildir.
+**Hedef depo:** [`rhizon-protocol/ortak`](https://github.com/rhizon-protocol/ortak)
 
-## 1. Yeni public depo oluştur
+İlk gönderimde `Validate and deploy Ortak` derlemesi `public/peer.js` içindeki iki `resolve()` çağrısının tür hatası nedeniyle başarısız oldu. Düzeltilmiş kod ve güncellenmiş GitHub Actions akışı bu pakette yer alır. Aşağıdaki adımları mevcut depoya uygula; yeni bir depo oluşturma.
 
-1. Önce [Rhizon Protocol depolarını kontrol et](https://github.com/orgs/rhizon-protocol/repositories); `ortak` veya aynı işlevi gören daha eski bir repo varsa yeni repo açmadan önce karşılaştır.
-2. GitHub hesabında oturum açıkken [Önceden doldurulmuş depo oluşturma formunu aç](https://github.com/new?owner=rhizon-protocol&name=ortak&visibility=public&description=Privacy-first%20digital%20tools%20and%20community-powered%20computing%20experiments).
-3. Owner: `rhizon-protocol`, repository name: `ortak`, visibility: **Public**.
-4. README, `.gitignore` veya LICENSE oluşturma seçeneklerini işaretleme. Bu proje arşivi bunları zaten içeriyor; boş depo oluşturup tek bir başlangıç geçmişi push etmek merge çakışmalarını önler.
-5. Depo adının boşta olduğunu ve organizasyonun yeni depo oluşturmaya izin verdiğini GitHub'da doğrula. Eğer `ortak` zaten varsa, dur ve sahip/amaç kontrolü yap; alternatif ad olarak `ortak-platform` kullanılabilir.
+## 1. Değişikliği mevcut depoya uygula
 
-## 2. Kaynakları yükle
+Önce GitHub deposunun yerel bir klonunu al:
 
-ZIP paketini indirip `rhizon-ortak` adında bir klasöre çıkar. O klasörde terminal aç ve önce doğrulamaları çalıştır:
+```bash
+git clone https://github.com/rhizon-protocol/ortak.git
+cd ortak
+```
+
+İndirilen `ortak-ci-network-hotfix.patch` dosyasını bu klasörün yanına koyduysan şu komutla değişiklikleri uygula:
+
+```bash
+git apply ../ortak-ci-network-hotfix.patch
+```
+
+Patch uygulanamıyorsa dosyalarda farklı değişiklikler olabilir. O durumda yalnızca aşağıdaki düzeltmeleri uygula ve mevcut kullanıcı değişikliklerini üzerine yazma:
+
+- `public/peer.js`: ICE toplama işlevinde ve `bufferedamountlow` bekleyicisinde `resolve()` çağrısını `resolve(undefined)` olarak değiştir.
+- `.github/workflows/pages.yml`: `actions/checkout@v7`, `actions/setup-node@v7`, `node-version: '24'` ve `runs-on: ubuntu-24.04` kullan.
+- `public/service-worker.js`: önbellek anahtarını `ortak-static-v2` yap ki eski kurulu PWA önceki sayfayı göstermeye devam etmesin.
+- Yeni `docs/collective-network-plan.md` dosyasını ve README'deki kapsam açıklamasını ekle. Bu sürümde otomatik katılımcı havuzu olmadığı kullanıcıya açıkça söylenmeli.
+
+## 2. Göndermeden önce yerel test
+
+Node.js 24 önerilir; proje runtime için Node.js 20.11+ ister.
 
 ```bash
 npm test
@@ -20,51 +36,31 @@ npm run typecheck
 npm run build
 ```
 
-Ardından yerel Git geçmişini oluştur ve boş GitHub deposuna gönder:
+Üç komut da başarılı olmalı. Ardından değişikliği gönder:
 
 ```bash
-git init -b main
+git status --short
 git add .
-git commit -m "Initial public release preparation"
-git remote add origin https://github.com/rhizon-protocol/ortak.git
-git push -u origin main
+git commit -m "Fix CI and document collective network roadmap"
+git push origin main
 ```
 
-Git kullanıcı adı/parola veya token'ı hiçbir kaynak dosyasına yazma. GitHub'un tarayıcı kimlik doğrulamasını veya yerel credential manager'ını kullan. Organizasyonun repo oluşturma/push politikası nedeniyle işlem reddedilirse izinleri kontrol et; gizli erişim anahtarı ekleyerek aşmaya çalışma.
+## 3. GitHub Pages ayarını kontrol et
 
-## 3. GitHub Pages ayarını yap
+1. Depoda **Settings → Pages** bölümünü aç.
+2. **Build and deployment → Source** değerinin **GitHub Actions** olduğunu doğrula.
+3. **Actions** sekmesinde yeni commit için `Validate and deploy Ortak` çalışmasını aç.
+4. `build` ve `deploy` işleri başarılı olmadan uygulamanın yeni sürümünün yayınlandığını varsayma.
+5. Başarılı dağıtımdan sonra `https://rhizon-protocol.github.io/ortak/` adresini yeni gizli pencere veya tarayıcı profiliyle aç. Yüklü PWA eski sürümü gösteriyorsa site verisini/servis çalışanı önbelleğini temizleyip yeniden yükle.
 
-1. Depoda **Settings → Pages** sayfasını aç.
-2. **Build and deployment → Source** değerini **GitHub Actions** seç.
-3. Actions sekmesinde `Validate and deploy Ortak` iş akışının çalışmasını izle.
-4. İş akışı başarılı olduktan sonra `https://rhizon-protocol.github.io/ortak/` adresini aç.
-5. Workflow başarısız olursa yeşil gibi göstermeden logu incele. `configure-pages` hatası Pages kaynağı ayarlanmadığını gösteriyorsa önce Settings adımını tamamlayıp workflow'u yeniden çalıştır.
+## 4. Mevcut sürümün gerçek sınırı
 
-GitHub Pages'in resmi belgeleri: [Custom workflows](https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages), [depo oluşturma](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-new-repository).
+Bu hotfix derlemeyi düzeltir; otomatik katılımcı keşfi ya da iş dağıtımını eklemez. Mevcut WebRTC deneyi davet/yanıtı elle kopyalamaya dayanır. İnsanların siteyi açar açmaz gönüllü havuzuna katılması, çevrimiçi katılımcı listesinin görülmesi ve işlerin otomatik eşleşmesi için koordinatör/sinyalleşme hizmeti gerekir. Ayrıntılı tasarım, ücretsiz plan limitleri, rıza ve test geçiş ölçütleri [`collective-network-plan.md`](collective-network-plan.md) içindedir.
 
-## 4. Canlı URL'de kabul testi
+## 5. Canlı sürüm kabul testi
 
-Yayından sonra en az:
-
-- Farklı içerikte bir JPEG, PNG ve WebP dosyası ekle; çıktıyı ayrı ayrı indir ve aç.
-- En az bir bozuk görsel ekle; diğer dosyaların tamamlandığını doğrula.
-- `Tek işçi` ve `Çoklu işçi` denemelerini mümkün olduğunca aynı dosya kümesiyle yap.
-- Birinci ve ikinci tarayıcıda WebRTC teklif/yanıt metinlerini değiş tokuş et; alıcı onayı yokken içeriğin aktarılmadığını denetle.
-- Bağlantı kurulduğunda dosya aktarımı ve sonucun geri dönüşünü kontrol et. Bu, aynı bilgisayardaki iki oturumla ilk smoke test'tir; fiziksel iki cihazın kanıtı sayılmaz.
-- Telefon ve masaüstünde aç; `Settings → Pages` URL'si, servis çalışanı kapsamı ve eski önbelleğe takılma davranışını kontrol et.
-
-## 5. İlk kullanıcı pilotunu aç
-
-- İlk duyuruya `experimental` ibaresi ve bilinen kısıtlamalar eklensin.
-- Issues ve Discussions etkinleştirilsin; güvenlik açıkları kamu issue'su yerine `SECURITY.md` yönergesiyle bildirilsin.
-- Kullanıcılardan orijinal fotoğraf, dosya adı, kişisel veri veya ekran görüntüsü istenmesin. Gönüllü geri bildirimde yalnızca cihaz/tarayıcı tipi, ayarlar, süreler ve hata adımları yeterli olsun.
-- İlk fiziksel cihazlar arası deneye katılmak isteyenlere karşı tarafın görsel dosyasını göreceği ve STUN sunucusunun ağ metaverisi görebileceği açıkça bildirilsin.
-
-## 6. Yayınlanmış saymak için gereken kanıt
-
-Repo URL'sinin açılması tek başına uygulamanın çalıştığını kanıtlamaz. Aşağıdaki kanıtları `docs/testing.md` içine tarih ve tarayıcı bilgileriyle eklemeden özellikleri doğrulanmış diye ilan etme:
-
-- Workflow başarı bağlantısı.
-- Canlı URL'de gerçek dosya işleme/indirme sonucu.
-- Ayrı iki fiziksel cihaz arasındaki WebRTC testi ve başarısız denemeler.
-- Denenen cihaz/tarayıcı listesi.
+- Gerçek JPEG, PNG, WebP dosyalarını işleyip çıktıları indir.
+- Bozuk dosyanın diğer dosyaları durdurmadığını doğrula.
+- Mobil ve masaüstünde deneyin.
+- Mevcut prototipin WebRTC testini ayrı iki fiziksel cihazda dene; tek makinedeki iki tarayıcı fiziksel cihazlar arası testi kanıtlamaz.
+- İş akışı bağlantısı, cihaz/tarayıcı ve gerçek sonuçları `docs/testing.md` içine ekle.

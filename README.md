@@ -2,17 +2,19 @@
 
 **Türkçe öncelikli, yerel çalışan dijital araçlar ve topluluk destekli cihazlar arası hesaplama deneyleri.**
 
-> Durum: Erken aşama açık kaynak projesi. Fotoğraf araçları ilk ürün; eşler arası işlem deneysel ve her ağda çalışacağı garanti edilmez.
+> Durum: Erken aşama açık kaynak projesi. Fotoğraf araçları ilk ürün; elle sinyalleşmeli WebRTC deneysel. Otomatik katılımcı havuzu ve görev dağıtımı henüz uygulanmadı.
 
 ## Deneyin
 
-Planlanan canlı adres: **https://rhizon-protocol.github.io/ortak/**  
-Bu adres henüz doğrulanmış canlı yayın değildir. Depo oluşturulup GitHub Pages ayarlanana ve ilk dağıtım başarılı olana kadar çalışır durumda kabul edilmemelidir. GitHub’a hazırlık adımları: [`docs/publish-to-github.md`](docs/publish-to-github.md).
+GitHub Pages adresi: **https://rhizon-protocol.github.io/ortak/**
 
-Yerel deneme için Node.js 20+ gerekir:
+Yeni bir sürümü duyurmadan önce son commit için `Validate and deploy Ortak` iş akışının başarılı tamamlandığını ve Pages ortamının dağıtımı onayladığını kontrol edin. İlk kurulum ve hata düzeltme adımları: [`docs/publish-to-github.md`](docs/publish-to-github.md).
+
+Yerel deneme için Node.js 20.11+ gerekir (CI, Node.js 24 kullanır):
 
 ```bash
 npm test
+npm run typecheck
 npm run build
 npm run serve
 ```
@@ -26,17 +28,18 @@ Ardından `http://localhost:4173` adresini aç. Uygulama çalışma zamanı bağ
 - İşlem süresi ve kaynak/çıktı boyutlarını görme.
 - Dosyaları ayrı ayrı veya tek ZIP arşiviyle indirme.
 - Yerel tekli ve çoklu işçi sonuçlarını karşılaştırma.
-- Deneysel WebRTC DataChannel üzerinden onaylı bir görsel işini başka tarayıcıya gönderip sonucu geri alma.
+- Deneysel WebRTC DataChannel üzerinden onaylı bir görsel işini başka tarayıcıya gönderip sonucu geri alma (bu sürümde davet/yanıt elle paylaşılır).
 
 ## Gizlilik ve güvenlik
 
 - Varsayılan fotoğraf işleme tarayıcıda yerel yapılır; uygulama kendi sunucusuna görsel yüklemez ve telemetri göndermez. GitHub Pages gibi barındırma altyapısı bağlantı sırasında IP adresi gibi teknik istek metaverilerini güvenlik/işletim amacıyla işleyebilir; bu, fotoğraf içeriğinin uygulama tarafından yüklendiği anlamına gelmez.
 - Eşler arası paylaşım ayrı ve isteğe bağlıdır. Alıcı paylaşılan görselin içeriğini görebilir; aktarım öncesi onay gereklidir.
+- Bu ilk sürümde kullanıcılar otomatik keşfedilmez, ortak işçi havuzuna kendiliğinden katılmaz ve görevler çevrimiçi cihazlara otomatik dağıtılmaz. Bunun için ayrı bir eşleştirme/sinyalleşme hizmeti ve iş kuyruğu gerekir; tasarım planı `docs/collective-network-plan.md` içindedir.
 - WebRTC bağlantısı için STUN keşfi `stun:stun.l.google.com:19302` adresini kullanır. Bu harici hizmetin kullanılabilirliği garanti edilmez. TURN veya merkezi sinyalleşme sunucusu yoktur; bazı ağlarda bağlantı başarısız olur.
 - Aktarım bütünlüğü özeti, karşı cihazın algoritmayı doğru çalıştırdığını kanıtlamaz.
 - Kullanıcı dosyalarını Issues/Discussions'a yüklemeyin. Hata raporlarında gizli bilgi ve kişisel veri paylaşmayın.
 
-Ayrıntılar için [`docs/architecture.md`](docs/architecture.md), [`docs/research.md`](docs/research.md), [`docs/testing.md`](docs/testing.md), [`docs/launch-plan.md`](docs/launch-plan.md) ve [`docs/publish-to-github.md`](docs/publish-to-github.md) belgelerine bakın.
+Otomatik katılımcı havuzu ve yol haritası için [`docs/collective-network-plan.md`](docs/collective-network-plan.md) belgesine; diğer ayrıntılar için [`docs/architecture.md`](docs/architecture.md), [`docs/research.md`](docs/research.md), [`docs/testing.md`](docs/testing.md), [`docs/launch-plan.md`](docs/launch-plan.md) ve [`docs/publish-to-github.md`](docs/publish-to-github.md) belgelerine bakın.
 
 ## Katkı verin
 
